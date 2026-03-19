@@ -13,9 +13,7 @@ Este é um projeto simples de lista de tarefas (To-Do List) executado via linha 
 - Remover uma tarefa através de seu ID
 
 ## 🐛 Problemas Conhecidos e Limitações
-- **Persistência:** O arquivo `tarefas.json` ainda não é gerado automaticamente; o programa falha se o arquivo estiver ausente no primeiro uso (em breve esse tratamento será criado).
-- **Lógica de Exclusão:** Existe um bug crítico onde não é possível excluir uma tarefa caso ela seja a única presente na lista.
-- **Robustez:** Falta uma camada global de tratamento de erros (Try/Catch), o que pode causar o fechamento inesperado do programa em casos de entradas inválidas ou falhas de leitura/escrita.
+- **Disparo de erros:** Atualmente alguns comandos ainda não tem disparo e tratamento de erros.
 
 
 ## 📚 O que estou praticando neste projeto:
