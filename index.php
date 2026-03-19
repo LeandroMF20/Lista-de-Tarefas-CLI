@@ -6,8 +6,13 @@ use App\Classes\GerenciadorDeTarefas;
 use App\Models\JsonRepositorio;
 
 // Carregamento do repositório e do gerenciador de tarefas
-$repo = new JsonRepositorio(__DIR__.'/data/tarefas.json');
-$gerenciador = new GerenciadorDeTarefas($repo);
+try {
+    $repo = new JsonRepositorio(__DIR__.'/data/tarefas.json');
+    $gerenciador = new GerenciadorDeTarefas($repo);
+}catch (Exception $e) {
+    echo $e->getMessage() . "\n";
+    return;
+}
 
 // Processamento dos comandos passados via linha de comando
 switch ($argv[1]) {
@@ -26,17 +31,27 @@ switch ($argv[1]) {
         break;
     case '-add':
         // Adiciona nova tarefa
-        $gerenciador->adicionarTarefa($argv[2], $argv[3]);
-        $gerenciador->salvar();
-        echo "Tarefa adicionada com sucesso\n";
+        try {
+            $gerenciador->adicionarTarefa($argv[2], $argv[3]);
+            $gerenciador->salvar();
+            echo "Tarefa adicionada com sucesso\n";
+        } catch (Exception $e) {
+            echo $e->getMessage() . "\n";
+        }
+        
         break;
     case '-list':
         // Lista todas as tarefas
-        foreach ($gerenciador->listaDeTarefas() as $id => $item) {
-            echo '(ID: '.$id.') ';
-            echo "\033[1;31m".$item->retornaTitulo()."\033[0m: ";
-            echo $item->retornaDescricao();
-            echo $item->retornaConcluido() ? ' [x]'."\n" : ' [ ]'."\n";
+        $lista = $gerenciador->listaDeTarefas();
+        if(count($lista) > 0){
+            foreach ($gerenciador->listaDeTarefas() as $id => $item) {
+                echo '(ID: '.$id.') ';
+                echo "\033[1;31m".$item->retornaTitulo()."\033[0m: ";
+                echo $item->retornaDescricao();
+                echo $item->retornaConcluido() ? ' [x]'."\n" : ' [ ]'."\n";
+            }
+        } else {
+            echo "Nenhuma tarefa foi adicionada ainda.";
         }
         break;
     case '-done':
@@ -46,10 +61,14 @@ switch ($argv[1]) {
         echo "Tarefa marcada como concluída\n";
         break;
     case '-delete':
-        // Remove uma tarefa
-        $gerenciador->removerTarefa($argv[2]);
-        $gerenciador->salvar();
-        echo "Item Removido com sucesso\n";
+        try {
+            // Remove uma tarefa
+            $gerenciador->removerTarefa($argv[2]);
+            $gerenciador->salvar();
+            echo "Item Removido com sucesso\n";
+        }catch (Exception $e) {
+            echo $e->getMessage() . "\n";
+        }        
         break;
     default:
         echo "Comando não reconhecido. Use '-help' para ter um resumo dos comandos.\n";

@@ -34,12 +34,13 @@ class JsonRepositorio implements TarefasRepositorioInterface
     ) {
         // Verifica se o caminho até o arquivo do diretório JSON existe.
         if (!is_dir(dirname($caminho))) {
-            throw new \InvalidArgumentException('O diretório informado não existe: '.dirname($caminho));
+            throw new \InvalidArgumentException('O diretório informado não existe: ' . dirname($caminho));
         }
 
         // Verifica se o arquivo passado existe.
         if (!file_exists($caminho)) {
-            throw new \RuntimeException('O arquivo passado não existe: '.$caminho);
+            // Criando arquivo caso ele não exista no diretório informado
+            file_put_contents($caminho, json_encode([]));
         }
     }
 
@@ -59,12 +60,12 @@ class JsonRepositorio implements TarefasRepositorioInterface
         $json = json_encode($list, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
 
         // Dispara erro caso o json_encode falhar
-        if ($json == false) {
+        if ($json === false) {
             throw new \InvalidArgumentException('Erro ao salvar arquivo, json inválido');
         }
 
         // Tenta salvar o json no arquivo selecionado, disparando erro caso algo dê errado
-        if (!file_put_contents($this->caminho, $json)) {
+        if (file_put_contents($this->caminho, $json) === false) {
             throw new \RuntimeException('Erro de escrita no caminho do json: '.$this->caminho);
         }
     }
@@ -82,15 +83,20 @@ class JsonRepositorio implements TarefasRepositorioInterface
         $json = file_get_contents($this->caminho);
 
         // Dispara erro caso o json não tenha sido carregado corretamente
-        if (!$json) {
+        if ($json === false) {
             throw new \InvalidArgumentException('Erro ao carregar arquivo JSON: '.$this->caminho);
         }
 
         // Converte o json em array
-        $json = json_decode($json, true);
+        if(json_validate($json)){
+            $json = json_decode($json, true);           
+        }else {
+            throw new \RuntimeException('JSON Inválido no arquivo carregado');
+        }
+        
 
         // Dispara erro caso o json seja inválido
-        if (!$json) {
+        if ($json === null) {
             throw new \RuntimeException('Erro na conversão do JSON em array');
         }
 

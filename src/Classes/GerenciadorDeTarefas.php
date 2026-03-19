@@ -5,6 +5,8 @@ namespace App\Classes;
 
 use App\Interfaces\TarefasRepositorioInterface;
 use App\Models\Tarefa;
+use Exception;
+use InvalidArgumentException;
 
 /**
  * Processamento da lista de tarefas.
@@ -88,18 +90,16 @@ class GerenciadorDeTarefas
 
     /**
      * Salvamento da lista de tarefas no repositório selecionado.
-     *
-     * @return bool Retorno true para indicar salvamento bem sucedido
      */
-    public function salvar(): bool
+    public function salvar(): void
     {
         // Convertendo objetos em arrays
+        $saida = [];
         foreach ($this->tarefas as $tarefa) {
             $saida[] = $tarefa->converterParaArray();
         }
+
         // Salvando lista de tarefas atualizada
         $this->repositorio->save($saida);
-
-        return true;
     }
 }
