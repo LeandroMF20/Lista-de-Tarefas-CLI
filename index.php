@@ -1,6 +1,7 @@
 <?php
 
-require __DIR__.'/Autoload.php';
+// Carrega o autoload do composer
+require __DIR__.'/vendor/autoload.php';
 
 use App\Classes\GerenciadorDeTarefas;
 use App\Models\JsonRepositorio;
@@ -9,7 +10,7 @@ use App\Models\JsonRepositorio;
 try {
     $repo = new JsonRepositorio(__DIR__.'/data/tarefas.json');
     $gerenciador = new GerenciadorDeTarefas($repo);
-}catch (Exception $e) {
+} catch (Exception $e) {
     echo $e->getMessage() . "\n";
     return;
 }
@@ -38,12 +39,12 @@ switch ($argv[1]) {
         } catch (Exception $e) {
             echo $e->getMessage() . "\n";
         }
-        
+
         break;
     case '-list':
         // Lista todas as tarefas
         $lista = $gerenciador->listaDeTarefas();
-        if(count($lista) > 0){
+        if (count($lista) > 0) {
             foreach ($gerenciador->listaDeTarefas() as $id => $item) {
                 echo '(ID: '.$id.') ';
                 echo "\033[1;31m".$item->retornaTitulo()."\033[0m: ";
@@ -66,9 +67,9 @@ switch ($argv[1]) {
             $gerenciador->removerTarefa($argv[2]);
             $gerenciador->salvar();
             echo "Item Removido com sucesso\n";
-        }catch (Exception $e) {
+        } catch (Exception $e) {
             echo $e->getMessage() . "\n";
-        }        
+        }
         break;
     default:
         echo "Comando não reconhecido. Use '-help' para ter um resumo dos comandos.\n";

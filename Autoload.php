@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Autoload padrão do programa.
  *

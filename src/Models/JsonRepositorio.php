@@ -32,15 +32,22 @@ class JsonRepositorio implements TarefasRepositorioInterface
     public function __construct(
         private string $caminho
     ) {
-        // Verifica se o caminho até o arquivo do diretório JSON existe.
-        if (!is_dir(dirname($caminho))) {
-            throw new \InvalidArgumentException('O diretório informado não existe: ' . dirname($caminho));
+        // Obtém o diretório do arquivo
+        $diretorio = dirname($caminho);
+
+        // Cria o diretório caso ele não exista
+        if (!is_dir($diretorio)) {
+            if (!mkdir($diretorio, 0755, true)) {
+                throw new \RuntimeException('Erro ao criar o diretório: ' . $diretorio);
+            }
         }
 
         // Verifica se o arquivo passado existe.
         if (!file_exists($caminho)) {
             // Criando arquivo caso ele não exista no diretório informado
-            file_put_contents($caminho, json_encode([]));
+            if (file_put_contents($caminho, json_encode([])) === false) {
+                throw new \RuntimeException('Erro ao criar arquivo JSON: ' . $caminho);
+            }
         }
     }
 
@@ -88,12 +95,12 @@ class JsonRepositorio implements TarefasRepositorioInterface
         }
 
         // Converte o json em array
-        if(json_validate($json)){
-            $json = json_decode($json, true);           
-        }else {
+        if (json_validate($json)) {
+            $json = json_decode($json, true);
+        } else {
             throw new \RuntimeException('JSON Inválido no arquivo carregado');
         }
-        
+
 
         // Dispara erro caso o json seja inválido
         if ($json === null) {

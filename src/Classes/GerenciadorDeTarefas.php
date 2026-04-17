@@ -2,11 +2,8 @@
 
 namespace App\Classes;
 
-
 use App\Interfaces\TarefasRepositorioInterface;
 use App\Models\Tarefa;
-use Exception;
-use InvalidArgumentException;
 
 /**
  * Processamento da lista de tarefas.
