@@ -31,10 +31,7 @@ Este é um projeto simples de lista de tarefas (To-Do List) executado via linha 
 Para rodar o projeto localmente, você precisará do **PHP 8.x** instalado em sua máquina.
 
 1. **Baixe o código-fonte** ou clone o repositório.
-2. **Configure o arquivo de dados:**
-   - Na raiz do projeto, localize o arquivo `tarefas-example.json`.
-   - Renomeie-o para `tarefas.json`.
-3. **Execute o programa:**
+2. **Execute o programa:**
    - Abra o terminal na raiz do projeto e digite:
      ```bash
      php index.php
