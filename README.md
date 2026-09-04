@@ -1,4 +1,4 @@
-# 📝 Lista de Tarefas CLI
+# Lista de Tarefas CLI
 
 Este é um projeto simples de lista de tarefas (To-Do List) executado via linha de comando (CLI), desenvolvido para fins de estudo e prática de lógica de programação e persistência de dados.
 
@@ -6,17 +6,17 @@ Este é um projeto simples de lista de tarefas (To-Do List) executado via linha 
 
 ---
 
-## 🚀 Funcionalidades Atuais
+## Funcionalidades Atuais
 - Adicionar uma nova tarefa.
 - Listar tarefas existentes.
 - Marcar tarefa como concluída (em desenvolvimento).
 - Remover uma tarefa através de seu ID
 
-## 🐛 Problemas Conhecidos e Limitações
+## Problemas Conhecidos e Limitações
 - **Disparo de erros:** Atualmente alguns comandos ainda não tem disparo e tratamento de erros.
 
 
-## 📚 O que estou praticando neste projeto:
+## O que estou praticando neste projeto:
 
 1. **Arquitetura de Software:** Implementação de padrões como **Repository Pattern** e uso de **Interfaces** para desacoplamento de código.
 2. **Tratamento de Exceções:** Fluxo de controle robusto com disparo de erros personalizados e blocos `try/catch`.
@@ -26,7 +26,7 @@ Este é um projeto simples de lista de tarefas (To-Do List) executado via linha 
 
 ---
 
-## 💻 Como testar
+## Como testar
 
 Para rodar o projeto localmente, você precisará do **PHP 8.x** instalado em sua máquina.
 
